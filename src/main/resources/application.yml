@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/clinic_booking"
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  mail:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey  # Dùng "apikey" thay cho tên người dùng
+    password: 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 # Thay bằng API Key của bạn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+server:
+  port: 8081
+jwt:
+  signerKey: "mqa0vyq2l6R+h8A421RSbG572s14p8J6QU7ofdhMH3LS9ZhUlJ7SWjz+O/ozXo6b"
+
+ai:
+  api:
+    url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+    key: "AIzaSyBWcrKgLP46HfdUYQJwMv_taPoE8xnmVA8"
+assemblyai:
+  api:
+    key: "13f5dd95cbad4fa1904a2619fe6b182c"
+
+springdoc:
+  swagger-ui:
+    enabled: true
