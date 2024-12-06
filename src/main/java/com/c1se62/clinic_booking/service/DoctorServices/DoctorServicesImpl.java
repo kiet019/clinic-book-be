@@ -202,7 +202,11 @@ public class DoctorServicesImpl implements DoctorServices {
                 doctor.getUser().getFirstName() + " " + doctor.getUser().getLastName() : "Unknown");
         response.setDepartment(doctor.getDepartment() != null ?
                 doctor.getDepartment().getName() : "Unknown");
-
+        response.setAddress(doctor.getUser().getAddress());
+        response.setCity(doctor.getUser().getCity());
+        response.setState(doctor.getUser().getState());
+        response.setEmail(doctor.getUser().getEmail());
+        response.setPhoneNumber(doctor.getUser().getPhoneNumber());
         Double averageRating = doctorRatingRepository.findAverageRatingByDoctorId(doctor.getDoctorId());
         response.setRating(averageRating != null ? averageRating : 0.0);
 
