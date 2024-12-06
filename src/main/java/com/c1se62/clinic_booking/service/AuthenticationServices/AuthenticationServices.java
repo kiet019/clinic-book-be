@@ -50,6 +50,7 @@ public class AuthenticationServices {
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
+                .role(user.getRole())
                 .build();
     }
     private String generateToken(User user){

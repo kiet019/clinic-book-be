@@ -141,7 +141,6 @@ public class UserServicesImpl implements UserServices {
 
     @Override
     public UserResponse getUserById(Integer userId) {
-        securityService.validateAdminAccess();
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         return mapToUserResponse(user);
