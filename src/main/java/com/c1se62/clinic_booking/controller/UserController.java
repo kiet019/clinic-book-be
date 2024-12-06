@@ -55,6 +55,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi hệ thống: " + e.getMessage());
         }
     }
+    @GetMapping("/info")
+    public ResponseEntity<UserResponse> getUserInfoById() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+        String userIdStr = jwt.getClaim("sub");
+        User user = userRepository.findByUsername(userIdStr)
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+        Integer id = user.getUserId();
+        return ResponseEntity.ok(userServices.getUserById(id));
+    }
     @PostMapping("/booking")
     public ResponseEntity<String> addBooking(@RequestBody AppointmentRequest appointmentRequest) {
         try {

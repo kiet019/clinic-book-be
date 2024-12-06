@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 @Data
 @AllArgsConstructor
@@ -23,6 +24,13 @@ public class UserResponse {
     private String email;
     private Boolean isActive;
     private String phoneNumber;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private String country;
+    private Date dateOfBirth;
+    private String bloodgroup;
     @ElementCollection
     private Set<String> roles;
 }

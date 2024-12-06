@@ -108,7 +108,21 @@ public class DoctorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
+    @GetMapping("/timeslots")
+    public ResponseEntity<List<TimeslotResponse>> getAvailableTimeSlotsDoctor() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Doctor doctor;
+                Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+                String userIdStr = jwt.getClaim("sub");
+                User user = userRepository.findByUsername(userIdStr).orElse(null);
+                doctor = doctorRepository.findByUserId(user.getUserId());
+            List<TimeslotResponse> timeSlots = timeSlotServices.getAvailableTimeSlots(doctor.getDoctorId());
+            return ResponseEntity.ok(timeSlots);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
     @GetMapping("/getAlldoctor")
     public ResponseEntity<?> getAllDoctors(@RequestParam(value = "departmentname", required = false) String departmentName) {
         try {
