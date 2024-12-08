@@ -151,6 +151,21 @@ public class DoctorController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/doctorinfo")
+    public ResponseEntity<DoctorResponse> getDoctorInfo() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+            String userIdStr = jwt.getClaim("sub");
+            User user = userRepository.findByUsername(userIdStr)
+                    .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+            Doctor doctor= doctorServices.getDoctorByUser(user);
+            DoctorResponse doctorResponse = doctorServices.getDoctorById(doctor.getDoctorId());
+            return new ResponseEntity<>(doctorResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/{id}/ratings")
     public ResponseEntity<List<DoctorRatingResponse>> getRatingsByDoctorId(@PathVariable int id) {
         List<DoctorRatingResponse> ratings = doctorServices.getRatingsByDoctorId(id);

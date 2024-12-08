@@ -7,6 +7,7 @@ import com.c1se62.clinic_booking.dto.request.UserRequest;
 import com.c1se62.clinic_booking.dto.response.DoctorRatingResponse;
 import com.c1se62.clinic_booking.dto.response.DoctorResponse;
 import com.c1se62.clinic_booking.entity.Doctor;
+import com.c1se62.clinic_booking.entity.User;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface DoctorServices {
     String updateDoctor(DoctorRequest doctorRequest, Integer doctorId);
     List<DoctorRatingResponse> getRatingsByDoctorId(int doctorId);
     void deleteDoctor(int id);
-
+    Doctor getDoctorByUser(User user);
 }
