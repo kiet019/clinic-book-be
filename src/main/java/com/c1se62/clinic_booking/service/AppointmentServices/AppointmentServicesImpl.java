@@ -16,10 +16,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -169,9 +166,19 @@ public class AppointmentServicesImpl implements AppointmentServices{
     }
 
     @Override
-    public List<DoctorDashboardResponse> getAppointmentsByDoctorId(Integer doctorId) {
-        // Lấy danh sách lịch khám từ repository lên doctor Dashboard
-        return appointmentRepository.findAppointmentsByDoctorId(doctorId);
+    public List<AppointmentDTO> getAppointmentsByDoctorId(Integer doctorId) {
+         List<Appointment>  appointmentList =appointmentRepository.findAppointmentsByDoctorId(doctorId);
+         List<AppointmentDTO> appointmentDTOList = new ArrayList<>();
+         for (Appointment appointment : appointmentList) {
+             AppointmentDTO appointmentDTO = new AppointmentDTO();
+             appointmentDTO.setAppointmentId(appointment.getAppointmentId());
+             appointmentDTO.setDoctorName(appointment.getDoctor().getUser().getFirstName() + " " + appointment.getDoctor().getUser().getLastName());
+             appointmentDTO.setDate(appointment.getTimeSlot().getDate());
+             appointmentDTO.setTimeStart(appointment.getTimeSlot().getTimeStart());
+             appointmentDTO.setTimeEnd(appointment.getTimeSlot().getTimeEnd());
+             appointmentDTOList.add(appointmentDTO);
+         }
+        return appointmentDTOList;
     }
 
     private Prescription mapToEntity(PrescriptionCreateDTO prescriptionCreateDTO, Medicine medicine) {

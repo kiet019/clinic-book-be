@@ -193,6 +193,11 @@ public class DoctorServicesImpl implements DoctorServices {
         userRepository.delete(doctor.getUser());
     }
 
+    @Override
+    public Doctor getDoctorByUser(User user) {
+        return null;
+    }
+
     private DoctorResponse mapToDTO(Doctor doctor) {
         DoctorResponse response = new DoctorResponse();
         response.setDoctorId(doctor.getDoctorId());

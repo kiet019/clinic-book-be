@@ -16,5 +16,5 @@ public interface AppointmentServices {
     boolean addPrescriptions(List<PrescriptionCreateDTO> prescriptions, Integer appointmentId);
     public List<AppointmentDTO> getAppointmentsByUserId(Integer userId) ;
 
-    List<DoctorDashboardResponse> getAppointmentsByDoctorId(Integer doctorId);
+    List<AppointmentDTO> getAppointmentsByDoctorId(Integer doctorId);
 }

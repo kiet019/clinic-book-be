@@ -58,6 +58,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi hệ thống: " + e.getMessage());
         }
     }
+
     @GetMapping("/info")
     public ResponseEntity<UserResponse> getUserInfoById() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

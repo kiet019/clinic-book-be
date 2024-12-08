@@ -1,6 +1,7 @@
 
 package com.c1se62.clinic_booking.controller;
 import com.c1se62.clinic_booking.dto.request.PrescriptionCreateDTO;
+import com.c1se62.clinic_booking.dto.response.AppointmentDTO;
 import com.c1se62.clinic_booking.dto.response.DoctorDashboardResponse;
 import com.c1se62.clinic_booking.entity.Doctor;
 import com.c1se62.clinic_booking.entity.User;
@@ -34,19 +35,19 @@ public class AppointmentController {
     }
 
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<List<DoctorDashboardResponse>> getAppointmentsByDoctorId(@PathVariable Integer doctorId) {
-        List<DoctorDashboardResponse> appointments = appointmentServices.getAppointmentsByDoctorId(doctorId);
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByDoctorId(@PathVariable Integer doctorId) {
+        List<AppointmentDTO> appointments = appointmentServices.getAppointmentsByDoctorId(doctorId);
         return ResponseEntity.ok(appointments);
     }
     @GetMapping("/doctor")
-    public ResponseEntity<List<DoctorDashboardResponse>> getAppointmentsByDoctor() {
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByDoctor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
         String userIdStr = jwt.getClaim("sub");
         User user = userRepository.findByUsername(userIdStr)
                 .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
         Doctor doctor= doctorRepository.findByUserId(user.getUserId());
-        List<DoctorDashboardResponse> appointments = appointmentServices.getAppointmentsByDoctorId(doctor.getDoctorId());
+        List<AppointmentDTO> appointments = appointmentServices.getAppointmentsByDoctorId(doctor.getDoctorId());
         return ResponseEntity.ok(appointments);
     }
 }
