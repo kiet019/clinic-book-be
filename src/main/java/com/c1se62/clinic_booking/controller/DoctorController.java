@@ -159,7 +159,7 @@ public class DoctorController {
             String userIdStr = jwt.getClaim("sub");
             User user = userRepository.findByUsername(userIdStr)
                     .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
-            Doctor doctor= doctorServices.getDoctorByUser(user);
+            Doctor doctor= doctorRepository.findByUserId(user.getUserId());
             DoctorResponse doctorResponse = doctorServices.getDoctorById(doctor.getDoctorId());
             return new ResponseEntity<>(doctorResponse, HttpStatus.OK);
         } catch (Exception e) {
