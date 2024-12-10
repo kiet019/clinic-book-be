@@ -39,9 +39,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
                 request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/doctors/updateDoctor").hasAuthority("DOCTOR")
-
+                        .requestMatchers(HttpMethod.POST,"/api/appointments/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/api/appointments/getAll").permitAll()
                         .anyRequest().authenticated()
         );
         httpSecurity.oauth2ResourceServer(

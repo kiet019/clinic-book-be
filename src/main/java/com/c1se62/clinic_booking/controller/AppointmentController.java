@@ -50,4 +50,9 @@ public class AppointmentController {
         List<AppointmentDTO> appointments = appointmentServices.getAppointmentsByDoctorId(doctor.getDoctorId());
         return ResponseEntity.ok(appointments);
     }
+    @GetMapping("/getAll")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        List<AppointmentDTO> appointments = appointmentServices.getAllAppointments();
+        return ResponseEntity.ok(appointments);
+    }
 }

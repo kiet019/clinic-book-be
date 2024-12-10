@@ -15,6 +15,7 @@ public interface AppointmentServices {
     String addAppointment(AppointmentRequest appointment,User user);
     boolean addPrescriptions(List<PrescriptionCreateDTO> prescriptions, Integer appointmentId);
     public List<AppointmentDTO> getAppointmentsByUserId(Integer userId) ;
-
     List<AppointmentDTO> getAppointmentsByDoctorId(Integer doctorId);
+    List<AppointmentDTO> getAllAppointments();
+
 }
