@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Value("${jwt.signerKey}")
     private String signerKey;
-    private final String[] PUBLIC_ENDPOINTS = {"/**",
+    private final String[] PUBLIC_ENDPOINTS = {"/**","/api/doctors/getAlldoctor"
     };
 
     @Bean
@@ -38,8 +38,10 @@ public class SecurityConfig {
         httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
+                request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/doctors/updateDoctor").hasAuthority("DOCTOR")
+
                         .anyRequest().authenticated()
         );
         httpSecurity.oauth2ResourceServer(

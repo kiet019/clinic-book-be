@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.print.Doc;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -176,28 +177,40 @@ public class DoctorController {
     }
 
     @PutMapping("/updateDoctor")
-    public ResponseEntity<String> updateDoctor(@RequestBody @Valid DoctorRequest doctorRequest) {
+    public ResponseEntity<String> updateDoctor(@RequestBody @Valid DoctorUpdatedDTO doctorDTO) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (!(authentication instanceof AnonymousAuthenticationToken)) {
-                Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
-                int doctorIdStr = jwt.getClaim("sub");
-                Doctor doctor = doctorRepository.findById(doctorIdStr).orElse(null);
 
-                if (doctor == null) {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bác sĩ không tồn tại");
-                }
-
-                // Gọi service để cập nhật thông tin Bác sĩ
-                String responseMessage = doctorServices.updateDoctor(doctorRequest,doctor.getDoctorId());
-
-                if (responseMessage.equals("Cập nhật thông tin bác sĩ thành công")) {
-                    return ResponseEntity.ok().body(responseMessage);
-                } else {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
-                }
-            } else {
+            // Check if the user is authenticated
+            if (authentication instanceof AnonymousAuthenticationToken) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn cần đăng nhập để thực hiện thao tác này");
+            }
+
+            // Extract user ID from JWT
+            Jwt jwt = ((JwtAuthenticationToken) authentication).getToken();
+            String userIdStr = jwt.getClaim("sub");
+            User user = userRepository.findByUsername(userIdStr)
+                    .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+
+            // Find the doctor by user ID
+            Doctor doctor = doctorRepository.findByUserId(user.getUserId());
+
+            // If the doctor does not exist, create a new one
+            if (doctor == null) {
+                doctor = new Doctor();
+                doctor.setUser (user);
+                doctor.setSpeciality("chờ sử lí"); // Set default speciality
+                doctorRepository.save(doctor);
+            }
+
+            // Call the service to update the doctor's information
+            DoctorResponse responseMessage = doctorServices.updateDoctor(doctor.getDoctorId(), doctorDTO);
+
+            // Return appropriate response based on the update result
+            if (responseMessage != null) {
+                return ResponseEntity.ok().body("Thành công");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cập nhật thông tin thất bại");
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating doctor: " + e.getMessage());

@@ -3,7 +3,6 @@ package com.c1se62.clinic_booking.service.DoctorServices;
 import com.c1se62.clinic_booking.dto.request.DoctorCreatedDTO;
 import com.c1se62.clinic_booking.dto.request.DoctorRequest;
 import com.c1se62.clinic_booking.dto.request.DoctorUpdatedDTO;
-import com.c1se62.clinic_booking.dto.request.UserRequest;
 import com.c1se62.clinic_booking.dto.response.DoctorRatingResponse;
 import com.c1se62.clinic_booking.dto.response.DoctorResponse;
 import com.c1se62.clinic_booking.emuns.ERole;
@@ -19,7 +18,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -80,6 +79,7 @@ public class DoctorServicesImpl implements DoctorServices {
             Department department = departmentRepository.findById(doctorDTO.getDepartmentId())
                     .orElseThrow(() -> new RuntimeException("Department not found"));
             doctor.setDepartment(department);
+            doctor.setSpeciality(department.getName());
         }
 
         User user = doctor.getUser();
@@ -116,6 +116,8 @@ public class DoctorServicesImpl implements DoctorServices {
         if (doctorDTO.getBloodgroup() != null) {
             user.setBloodgroup(doctorDTO.getBloodgroup());
         }
+
+
         userRepository.save(user);
         Doctor updatedDoctor = doctorRepository.save(doctor);
         return mapToDTO(updatedDoctor);

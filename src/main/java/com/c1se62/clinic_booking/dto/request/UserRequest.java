@@ -28,24 +28,19 @@ public class UserRequest {
     @Pattern(regexp = "^\\d+$", message = "Số điện thoại chỉ được chứa các chữ số.")
     private String phoneNumber;
 
-    @NotNull(message = "Vui lòng nhập địa chỉ của bạn.")
     private String address;
 
-    @NotNull(message = "Vui lòng chọn thành phố.")
     private String city;
 
-    @NotNull(message = "Vui lòng chọn tỉnh/thành phố.")
     private String state;
 
     private String zip;
 
-    @NotNull(message = "Vui lòng chọn quốc gia.")
     private String country;
 
     @NotNull(message = "Vui lòng nhập ngày sinh.")
     @Past
     private Date dateOfBirth;
 
-    @NotNull(message = "Vui lòng chọn nhóm máu.")
     private String bloodgroup;
 }
