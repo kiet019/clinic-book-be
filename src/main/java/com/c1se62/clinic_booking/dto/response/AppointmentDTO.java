@@ -21,4 +21,5 @@ public class AppointmentDTO {
     private String doctorName;
     private String status;
     private Integer user;
+    private String name;
 }

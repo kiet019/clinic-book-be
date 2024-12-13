@@ -159,7 +159,8 @@ public class AppointmentServicesImpl implements AppointmentServices{
                 a.getTimeSlot().getTimeEnd(),
                 a.getDoctor().getUser().getFirstName(),
                 a.getStatus().toString(),
-                a.getUser().getUserId()
+                a.getUser().getUserId(),
+                a.getUser().getFirstName()+" "+a.getUser().getLastName()
                 )).collect(Collectors.toList());
     }
 
@@ -176,6 +177,7 @@ public class AppointmentServicesImpl implements AppointmentServices{
              appointmentDTO.setTimeEnd(appointment.getTimeSlot().getTimeEnd());
              appointmentDTO.setUser(appointment.getUser().getUserId());
              appointmentDTO.setDoctor(appointment.getDoctor().getDoctorId());
+             appointmentDTO.setName(appointment.getUser().getFirstName()+" "+appointment.getUser().getLastName());
              appointmentDTOList.add(appointmentDTO);
 
          }
