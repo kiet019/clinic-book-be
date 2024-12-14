@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrescriptionDTO {
+    private Integer medicineId;
     private String dosage;
     private String name;
     private String description;

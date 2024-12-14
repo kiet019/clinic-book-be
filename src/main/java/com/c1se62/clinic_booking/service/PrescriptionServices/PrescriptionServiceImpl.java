@@ -44,6 +44,7 @@ public class PrescriptionServiceImpl implements PrescriptionServices {
         Set<PrescriptionDTO> prescriptionDTOS = new HashSet<>();
         for(Prescription prescription : prescriptions){
             PrescriptionDTO prescriptionDTO=new PrescriptionDTO();
+            prescriptionDTO.setMedicineId(prescription.getMedicine().getMedicineId());
         prescriptionDTO.setDosage(prescription.getDosage());
         prescriptionDTO.setName(prescription.getMedicine().getName());
         prescriptionDTO.setDescription(prescription.getMedicine().getDescription());
