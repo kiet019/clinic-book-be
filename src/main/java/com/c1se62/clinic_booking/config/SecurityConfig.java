@@ -41,6 +41,7 @@ public class SecurityConfig {
                 request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/appointments/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html","/api/appointments/getAll").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"api/doctors/updatedoctor").permitAll()
                         .anyRequest().authenticated()
         );
         httpSecurity.oauth2ResourceServer(

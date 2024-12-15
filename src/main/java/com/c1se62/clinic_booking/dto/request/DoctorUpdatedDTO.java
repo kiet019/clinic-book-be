@@ -13,6 +13,7 @@ public class DoctorUpdatedDTO {
     private String bio;
     private String speciality;
     private Integer departmentId;
+    private String department;
     private String firstName;
     private String lastName;
     private String email;

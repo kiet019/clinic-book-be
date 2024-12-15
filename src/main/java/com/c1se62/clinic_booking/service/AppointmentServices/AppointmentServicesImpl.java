@@ -178,6 +178,8 @@ public class AppointmentServicesImpl implements AppointmentServices{
              appointmentDTO.setUser(appointment.getUser().getUserId());
              appointmentDTO.setDoctor(appointment.getDoctor().getDoctorId());
              appointmentDTO.setName(appointment.getUser().getFirstName()+" "+appointment.getUser().getLastName());
+             appointmentDTO.setStatus(appointment.getStatus());
+
              appointmentDTOList.add(appointmentDTO);
 
          }

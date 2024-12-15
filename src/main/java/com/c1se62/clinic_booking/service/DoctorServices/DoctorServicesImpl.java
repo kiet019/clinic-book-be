@@ -75,9 +75,8 @@ public class DoctorServicesImpl implements DoctorServices {
             doctor.setSpeciality(doctorDTO.getSpeciality());
         }
 
-        if (doctorDTO.getDepartmentId() != null) {
-            Department department = departmentRepository.findById(doctorDTO.getDepartmentId())
-                    .orElseThrow(() -> new RuntimeException("Department not found"));
+        if (doctorDTO.getDepartment() != null) {
+            Department department = departmentRepository.findByName(doctorDTO.getDepartment());
             doctor.setDepartment(department);
             doctor.setSpeciality(department.getName());
         }
